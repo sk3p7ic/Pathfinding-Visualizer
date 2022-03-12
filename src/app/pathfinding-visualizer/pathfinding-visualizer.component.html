@@ -1,12 +1,14 @@
 <div>
-  <nav class="navbar fixed-top navbar-dark bg-dark">
+  <nav class="navbar fixed-top navbar-dark bg-dark" id="navbar">
     <div class="container">
       <a class="navbar-brand" href="#">Pathfinding Visualizer</a>
       <ul class="navbar-nav">
         <div class="form-inline">
           <div class="input-group">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="algo-dropdown-text">Algorithm:</span>
+              <span class="input-group-text" id="algo-dropdown-text"
+                >Algorithm:</span
+              >
             </div>
             <select id="algo-dropdown" class="form-control mr-sm-2">
               <option selected>Foo Bar</option>
@@ -14,28 +16,54 @@
               <option>Lorem ipsum</option>
             </select>
           </div>
-          <button class="btn my-2 my-sm-0 mr-sm-2 btn-primary" type="button">Run!</button>
-          <button class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-primary" type="button">Reset All</button>
-          <button class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-primary" type="button">Clear Walls</button>
-          <button class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-primary" type="button">Clear Path</button>
-          <button class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-help" type="button">Help?</button>
+          <button class="btn my-2 my-sm-0 mr-sm-2 btn-primary" type="button">
+            Run!
+          </button>
+          <button
+            class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-primary"
+            type="button"
+            (click)="handleResetClick()"
+          >
+            Reset All
+          </button>
+          <button
+            class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-primary"
+            type="button"
+          >
+            Clear Walls
+          </button>
+          <button
+            class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-primary"
+            type="button"
+          >
+            Clear Path
+          </button>
+          <button
+            class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-help"
+            type="button"
+          >
+            Help?
+          </button>
         </div>
       </ul>
     </div>
   </nav>
-  <div id="pathfinding-grid-container" class="container d-none d-lg-block vh-100">
+  <div class="d-none d-lg-block">
+    <app-pathfinding-grid [doReset]="doReset"></app-pathfinding-grid>
+  </div>
+  <div
+    id="pathfinding-grid-container"
+    class="container d-block d-lg-none vh-100"
+  >
     <div class="row align-items-center h-100">
-      <div class="col-6 max-auto">
-        <app-pathfinding-grid></app-pathfinding-grid>
+      <div class="col-6 mx-auto">
+        <h1 style="color: #212121">
+          Sorry, but this screen size is not supported.
+        </h1>
       </div>
     </div>
   </div>
-  <div id="pathfinding-grid-container" class="container d-block d-lg-none vh-100">
-    <div class="row align-items-center h-100">
-      <div class="col-6 max-auto">
-        <h1 style="color: #212121;">Sorry, but this screen size is not supported.</h1>
-      </div>
-    </div>
-  </div>
-  <footer class="text-center bg-dark text-light">Joshua Ibrom (sk3p7ic), 2022</footer>
+  <footer class="text-center bg-dark text-light">
+    Joshua Ibrom (sk3p7ic), 2022
+  </footer>
 </div>
