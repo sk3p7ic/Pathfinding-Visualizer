@@ -58,6 +58,15 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
       }
       this.nodes.push(gridRow);
     }
+    // Calculate default position of Start and End nodes
+    if (this.nodes.length > 0) {
+      const widthOffset = Math.floor(this.gridWidth * 0.2);
+      const heightOffset = Math.floor(this.gridHeight * 0.5);
+      // Set the start and end
+      this.nodes[heightOffset][widthOffset].nodeType = GridNodeType.START;
+      this.nodes[heightOffset][this.gridWidth - widthOffset].nodeType =
+        GridNodeType.END;
+    }
   }
 
   @HostListener('window:resize', ['$event'])
