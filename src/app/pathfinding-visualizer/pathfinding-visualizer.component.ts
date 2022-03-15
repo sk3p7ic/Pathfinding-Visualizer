@@ -7,11 +7,13 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class PathfindingVisualizerComponent implements OnInit {
   doReset: number;
+  doWallsReset: number;
   keyMode: VisualizerKeyMode;
   availableKeyModes = VisualizerKeyMode;
 
   constructor() {
     this.doReset = 0;
+    this.doWallsReset = 0;
     this.keyMode = VisualizerKeyMode.WALL;
   }
 
@@ -19,6 +21,10 @@ export class PathfindingVisualizerComponent implements OnInit {
 
   handleResetClick() {
     this.doReset++;
+  }
+
+  handleWallClick() {
+    this.doWallsReset++;
   }
 
   @HostListener('document:keypress', ['$event'])

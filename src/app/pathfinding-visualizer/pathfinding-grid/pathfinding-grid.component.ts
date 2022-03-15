@@ -17,6 +17,7 @@ import { GridNodeType } from './grid-node-type';
 })
 export class PathfindingGridComponent implements OnInit, OnChanges {
   @Input('doReset') resetListener = 0;
+  @Input() wallReset = 0;
   @Input() keyMode!: VisualizerKeyMode;
 
   width: any;
@@ -44,6 +45,8 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName in changes) {
       if (propName === 'resetListener') this.resetGrid();
+      if (propName === 'wallReset')
+        this.removeExistingNodesOfType(GridNodeType.BARRIER);
     }
   }
 

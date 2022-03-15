@@ -29,6 +29,7 @@
           <button
             class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-primary"
             type="button"
+            (click)="handleWallClick()"
           >
             Clear Walls
           </button>
@@ -52,6 +53,7 @@
     <app-pathfinding-grid
       [doReset]="doReset"
       [keyMode]="keyMode"
+      [wallReset]="doWallsReset"
     ></app-pathfinding-grid>
   </div>
   <div
