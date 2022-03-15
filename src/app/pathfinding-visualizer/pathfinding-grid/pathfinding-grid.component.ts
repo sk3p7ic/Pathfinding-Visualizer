@@ -93,7 +93,13 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
     if (this.mousePressed) {
       switch (this.keyMode) {
         case VisualizerKeyMode.DEMOLISH:
-          this.nodes[row][col].nodeType = GridNodeType.UNDEFINED;
+          if (
+            !(
+              this.nodes[row][col].nodeType === GridNodeType.START ||
+              this.nodes[row][col].nodeType === GridNodeType.END
+            )
+          )
+            this.nodes[row][col].nodeType = GridNodeType.UNDEFINED;
           break;
         case VisualizerKeyMode.PLACE_END:
           this.removeExistingStartOrEnd(GridNodeType.END);
@@ -104,7 +110,13 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
           this.nodes[row][col].nodeType = GridNodeType.START;
           break;
         case VisualizerKeyMode.WALL:
-          this.nodes[row][col].nodeType = GridNodeType.BARRIER;
+          if (
+            !(
+              this.nodes[row][col].nodeType === GridNodeType.START ||
+              this.nodes[row][col].nodeType === GridNodeType.END
+            )
+          )
+            this.nodes[row][col].nodeType = GridNodeType.BARRIER;
           break;
       }
     }
@@ -113,7 +125,13 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
   handleMouseClick(row: number, col: number) {
     switch (this.keyMode) {
       case VisualizerKeyMode.DEMOLISH:
-        this.nodes[row][col].nodeType = GridNodeType.UNDEFINED;
+        if (
+          !(
+            this.nodes[row][col].nodeType === GridNodeType.START ||
+            this.nodes[row][col].nodeType === GridNodeType.END
+          )
+        )
+          this.nodes[row][col].nodeType = GridNodeType.UNDEFINED;
         break;
       case VisualizerKeyMode.PLACE_END:
         this.removeExistingStartOrEnd(GridNodeType.END);
@@ -124,7 +142,13 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
         this.nodes[row][col].nodeType = GridNodeType.START;
         break;
       case VisualizerKeyMode.WALL:
-        this.nodes[row][col].nodeType = GridNodeType.BARRIER;
+        if (
+          !(
+            this.nodes[row][col].nodeType === GridNodeType.START ||
+            this.nodes[row][col].nodeType === GridNodeType.END
+          )
+        )
+          this.nodes[row][col].nodeType = GridNodeType.BARRIER;
         break;
     }
   }
