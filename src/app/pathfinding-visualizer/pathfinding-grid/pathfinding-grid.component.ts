@@ -6,6 +6,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { VisualizerKeyMode } from '../pathfinding-visualizer.component';
 import { GridNode } from './grid-node';
 import { GridNodeType } from './grid-node-type';
 
@@ -16,6 +17,7 @@ import { GridNodeType } from './grid-node-type';
 })
 export class PathfindingGridComponent implements OnInit, OnChanges {
   @Input('doReset') resetListener = 0;
+  @Input() keyMode!: VisualizerKeyMode;
 
   width: any;
   height: any;
@@ -79,10 +81,34 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
   calculateGridPosition() {}
 
   handleMouseEnter(row: number, col: number) {
-    if (this.mousePressed) this.nodes[row][col].nodeType = GridNodeType.BARRIER;
+    if (this.mousePressed) {
+      switch (this.keyMode) {
+        case VisualizerKeyMode.DEMOLISH:
+          this.nodes[row][col].nodeType = GridNodeType.UNDEFINED;
+          break;
+        case VisualizerKeyMode.PLACE_END:
+          break;
+        case VisualizerKeyMode.PLACE_START:
+          break;
+        case VisualizerKeyMode.WALL:
+          this.nodes[row][col].nodeType = GridNodeType.BARRIER;
+          break;
+      }
+    }
   }
 
   handleMouseClick(row: number, col: number) {
-    this.nodes[row][col].nodeType = GridNodeType.BARRIER;
+    switch (this.keyMode) {
+      case VisualizerKeyMode.DEMOLISH:
+        this.nodes[row][col].nodeType = GridNodeType.UNDEFINED;
+        break;
+      case VisualizerKeyMode.PLACE_END:
+        break;
+      case VisualizerKeyMode.PLACE_START:
+        break;
+      case VisualizerKeyMode.WALL:
+        this.nodes[row][col].nodeType = GridNodeType.BARRIER;
+        break;
+    }
   }
 }

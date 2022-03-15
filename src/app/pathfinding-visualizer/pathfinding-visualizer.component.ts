@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-pathfinding-visualizer',
@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PathfindingVisualizerComponent implements OnInit {
   doReset: number;
+  keyMode: VisualizerKeyMode;
+  availableKeyModes = VisualizerKeyMode;
 
   constructor() {
     this.doReset = 0;
+    this.keyMode = VisualizerKeyMode.WALL;
   }
 
   ngOnInit(): void {}
@@ -17,4 +20,31 @@ export class PathfindingVisualizerComponent implements OnInit {
   handleResetClick() {
     this.doReset++;
   }
+
+  @HostListener('document:keypress', ['$event'])
+  handleKeypress(event: KeyboardEvent) {
+    const key = event.key.toLowerCase();
+    switch (key) {
+      case 'd':
+        this.keyMode = VisualizerKeyMode.DEMOLISH;
+        break;
+      case 'e':
+        this.keyMode = VisualizerKeyMode.PLACE_END;
+        break;
+      case 's':
+        this.keyMode = VisualizerKeyMode.PLACE_START;
+        break;
+      default:
+        // Default to placing walls
+        this.keyMode = VisualizerKeyMode.WALL;
+        break;
+    }
+  }
+}
+
+export enum VisualizerKeyMode {
+  WALL = '(w) Wall',
+  DEMOLISH = '(d) Demolish',
+  PLACE_START = '(s) Place Start',
+  PLACE_END = '(e) Place End',
 }
