@@ -80,13 +80,11 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
 
   @HostListener('document:mousedown', ['$event'])
   onMouseDown(event: any) {
-    console.log('The mouse is pressed down.');
     this.mousePressed = true;
   }
 
   @HostListener('document:mouseup', ['$event'])
   onMouseUp(event: any) {
-    console.log('The mouse is released.');
     this.mousePressed = false;
   }
 
