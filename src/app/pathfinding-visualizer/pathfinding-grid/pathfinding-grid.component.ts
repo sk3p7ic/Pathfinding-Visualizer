@@ -102,11 +102,11 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
             this.nodes[row][col].nodeType = GridNodeType.UNDEFINED;
           break;
         case VisualizerKeyMode.PLACE_END:
-          this.removeExistingStartOrEnd(GridNodeType.END);
+          this.removeExistingNodesOfType(GridNodeType.END);
           this.nodes[row][col].nodeType = GridNodeType.END;
           break;
         case VisualizerKeyMode.PLACE_START:
-          this.removeExistingStartOrEnd(GridNodeType.START);
+          this.removeExistingNodesOfType(GridNodeType.START);
           this.nodes[row][col].nodeType = GridNodeType.START;
           break;
         case VisualizerKeyMode.WALL:
@@ -134,11 +134,11 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
           this.nodes[row][col].nodeType = GridNodeType.UNDEFINED;
         break;
       case VisualizerKeyMode.PLACE_END:
-        this.removeExistingStartOrEnd(GridNodeType.END);
+        this.removeExistingNodesOfType(GridNodeType.END);
         this.nodes[row][col].nodeType = GridNodeType.END;
         break;
       case VisualizerKeyMode.PLACE_START:
-        this.removeExistingStartOrEnd(GridNodeType.START);
+        this.removeExistingNodesOfType(GridNodeType.START);
         this.nodes[row][col].nodeType = GridNodeType.START;
         break;
       case VisualizerKeyMode.WALL:
@@ -153,7 +153,7 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
     }
   }
 
-  removeExistingStartOrEnd(value: GridNodeType) {
+  removeExistingNodesOfType(value: GridNodeType) {
     for (const row of this.nodes) {
       for (const node of row) {
         if (node.nodeType === value) node.nodeType = GridNodeType.UNDEFINED;
