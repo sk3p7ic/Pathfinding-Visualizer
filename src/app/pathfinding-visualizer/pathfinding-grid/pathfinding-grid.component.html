@@ -1,0 +1,15 @@
+<div>
+  <div class="pathfinding-row" *ngFor="let row of nodes; index as i">
+    <div
+      class="pathfinding-node"
+      *ngFor="let node of row; index as j"
+      [ngStyle]="{
+        'background-color': node.getColor(),
+        'top.px': i * 25 + 100,
+        'left.px': j * 25 + 100
+      }"
+      (mouseenter)="handleMouseEnter(i, j)"
+      (click)="handleMouseClick(i, j)"
+    ></div>
+  </div>
+</div>

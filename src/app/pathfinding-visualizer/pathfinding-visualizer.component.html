@@ -1,0 +1,97 @@
+<div>
+  <nav class="navbar fixed-top navbar-dark bg-dark" id="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#">Pathfinding Visualizer</a>
+      <ul class="navbar-nav">
+        <div class="form-inline">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="algo-dropdown-text"
+                >Algorithm:</span
+              >
+            </div>
+            <select
+              id="algo-dropdown"
+              class="form-control mr-sm-2"
+              [(ngModel)]="selectedAlgorithm"
+              name="algoSelection"
+            >
+              <option
+                *ngFor="let algo of availableAlgorithms | keyvalue"
+                selected
+              >
+                {{ algo.value }}
+              </option>
+            </select>
+          </div>
+          <button
+            class="btn my-2 my-sm-0 mr-sm-2 btn-primary"
+            type="button"
+            (click)="runAlgorithm()"
+          >
+            Run!
+          </button>
+          <button
+            class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-primary"
+            type="button"
+            (click)="handleResetClick()"
+          >
+            Reset All
+          </button>
+          <button
+            class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-primary"
+            type="button"
+            (click)="handleWallClick()"
+          >
+            Clear Walls
+          </button>
+          <button
+            class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-primary"
+            type="button"
+          >
+            Clear Path
+          </button>
+          <button
+            class="btn btn-sm my-2 my-sm-0 mr-sm-2 btn-help"
+            type="button"
+          >
+            Help?
+          </button>
+        </div>
+      </ul>
+    </div>
+  </nav>
+  <div class="d-none d-lg-block">
+    <app-pathfinding-grid
+      [doRun]="doRun"
+      [doReset]="doReset"
+      [algorithm]="selectedAlgorithm"
+      [keyMode]="keyMode"
+      [wallReset]="doWallsReset"
+    ></app-pathfinding-grid>
+  </div>
+  <div
+    id="pathfinding-grid-container"
+    class="container d-block d-lg-none vh-100"
+  >
+    <div class="row align-items-center h-100">
+      <div class="col-6 mx-auto">
+        <h1 style="color: #212121">
+          Sorry, but this screen size is not supported.
+        </h1>
+      </div>
+    </div>
+  </div>
+  <footer class="bg-dark text-light">
+    <div class="text-left footer-div">
+      <p
+        *ngFor="let mode of availableKeyModes | keyvalue"
+        class="footer-key-control"
+        [ngClass]="mode.value === keyMode ? 'current-control' : ''"
+      >
+        {{ mode.value }}
+      </p>
+    </div>
+    <div class="text-right footer-div">Joshua Ibrom (sk3p7ic), 2022</div>
+  </footer>
+</div>
