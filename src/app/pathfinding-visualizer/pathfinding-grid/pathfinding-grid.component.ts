@@ -6,7 +6,12 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { VisualizerKeyMode } from '../pathfinding-visualizer.component';
+import { AlgorithmController } from '../algorithms/algorithm-controller';
+import { AStar } from '../algorithms/astar';
+import {
+  AvailableAlgorithms,
+  VisualizerKeyMode,
+} from '../pathfinding-visualizer.component';
 import { GridNode } from './grid-node';
 import { GridNodeType } from './grid-node-type';
 
@@ -16,7 +21,9 @@ import { GridNodeType } from './grid-node-type';
   styleUrls: ['./pathfinding-grid.component.sass'],
 })
 export class PathfindingGridComponent implements OnInit, OnChanges {
+  @Input('doRun') runListener = 0;
   @Input('doReset') resetListener = 0;
+  @Input() algorithm!: AvailableAlgorithms;
   @Input() wallReset = 0;
   @Input() keyMode!: VisualizerKeyMode;
 
@@ -26,6 +33,8 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
   gridHeight: number;
 
   nodes: GridNode[][];
+  startNode!: GridNode;
+  endNode!: GridNode;
 
   mousePressed: boolean;
 
@@ -44,6 +53,7 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName in changes) {
+      if (propName === 'runListener') this.runAlgorithm();
       if (propName === 'resetListener') this.resetGrid();
       if (propName === 'wallReset')
         this.removeExistingNodesOfType(GridNodeType.BARRIER);
@@ -69,6 +79,8 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
       this.nodes[heightOffset][widthOffset].nodeType = GridNodeType.START;
       this.nodes[heightOffset][this.gridWidth - widthOffset].nodeType =
         GridNodeType.END;
+      this.startNode = this.nodes[heightOffset][widthOffset];
+      this.endNode = this.nodes[heightOffset][this.gridWidth - widthOffset];
     }
   }
 
@@ -105,10 +117,12 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
         case VisualizerKeyMode.PLACE_END:
           this.removeExistingNodesOfType(GridNodeType.END);
           this.nodes[row][col].nodeType = GridNodeType.END;
+          this.endNode = this.nodes[row][col];
           break;
         case VisualizerKeyMode.PLACE_START:
           this.removeExistingNodesOfType(GridNodeType.START);
           this.nodes[row][col].nodeType = GridNodeType.START;
+          this.startNode = this.nodes[row][col];
           break;
         case VisualizerKeyMode.WALL:
           if (
@@ -137,10 +151,12 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
       case VisualizerKeyMode.PLACE_END:
         this.removeExistingNodesOfType(GridNodeType.END);
         this.nodes[row][col].nodeType = GridNodeType.END;
+        this.endNode = this.nodes[row][col];
         break;
       case VisualizerKeyMode.PLACE_START:
         this.removeExistingNodesOfType(GridNodeType.START);
         this.nodes[row][col].nodeType = GridNodeType.START;
+        this.startNode = this.nodes[row][col];
         break;
       case VisualizerKeyMode.WALL:
         if (
@@ -160,5 +176,18 @@ export class PathfindingGridComponent implements OnInit, OnChanges {
         if (node.nodeType === value) node.nodeType = GridNodeType.UNDEFINED;
       }
     }
+  }
+
+  runAlgorithm() {
+    if (this.runListener === 0) return;
+    const getAlgoClass = () => {
+      switch (this.algorithm) {
+        case AvailableAlgorithms.ASTAR:
+          return new AStar(this.nodes, this.startNode, this.endNode);
+      }
+    };
+    const controller = new AlgorithmController(this, getAlgoClass());
+    console.log('Running ', this.algorithm);
+    controller.runAlgorithm();
   }
 }

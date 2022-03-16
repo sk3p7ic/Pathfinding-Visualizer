@@ -10,13 +10,25 @@
                 >Algorithm:</span
               >
             </div>
-            <select id="algo-dropdown" class="form-control mr-sm-2">
-              <option selected>Foo Bar</option>
-              <option>Biz Baz</option>
-              <option>Lorem ipsum</option>
+            <select
+              id="algo-dropdown"
+              class="form-control mr-sm-2"
+              [(ngModel)]="selectedAlgorithm"
+              name="algoSelection"
+            >
+              <option
+                *ngFor="let algo of availableAlgorithms | keyvalue"
+                selected
+              >
+                {{ algo.value }}
+              </option>
             </select>
           </div>
-          <button class="btn my-2 my-sm-0 mr-sm-2 btn-primary" type="button">
+          <button
+            class="btn my-2 my-sm-0 mr-sm-2 btn-primary"
+            type="button"
+            (click)="runAlgorithm()"
+          >
             Run!
           </button>
           <button
@@ -51,7 +63,9 @@
   </nav>
   <div class="d-none d-lg-block">
     <app-pathfinding-grid
+      [doRun]="doRun"
       [doReset]="doReset"
+      [algorithm]="selectedAlgorithm"
       [keyMode]="keyMode"
       [wallReset]="doWallsReset"
     ></app-pathfinding-grid>

@@ -6,18 +6,27 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./pathfinding-visualizer.component.sass'],
 })
 export class PathfindingVisualizerComponent implements OnInit {
+  selectedAlgorithm: AvailableAlgorithms;
+  doRun: number;
   doReset: number;
   doWallsReset: number;
   keyMode: VisualizerKeyMode;
   availableKeyModes = VisualizerKeyMode;
+  availableAlgorithms = AvailableAlgorithms;
 
   constructor() {
+    this.selectedAlgorithm = AvailableAlgorithms.ASTAR;
+    this.doRun = 0;
     this.doReset = 0;
     this.doWallsReset = 0;
     this.keyMode = VisualizerKeyMode.WALL;
   }
 
   ngOnInit(): void {}
+
+  runAlgorithm() {
+    this.doRun++;
+  }
 
   handleResetClick() {
     this.doReset++;
@@ -53,4 +62,8 @@ export enum VisualizerKeyMode {
   DEMOLISH = '(d) Demolish',
   PLACE_START = '(s) Place Start',
   PLACE_END = '(e) Place End',
+}
+
+export enum AvailableAlgorithms {
+  ASTAR = 'A*',
 }

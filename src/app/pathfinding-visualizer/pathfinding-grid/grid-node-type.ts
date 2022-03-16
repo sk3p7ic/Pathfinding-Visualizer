@@ -4,5 +4,6 @@ export enum GridNodeType {
   OPEN,
   CLOSED,
   BARRIER,
-  UNDEFINED
+  UNDEFINED,
+  PATH,
 }
